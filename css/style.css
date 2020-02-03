@@ -3,3 +3,22 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  font-family: 'Lobster', cursive;
+  font-size: 14px;
+}
+
+.calendar_wrapper {
+  width: 80%;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 16px;
+}
+.days-list li {
+  margin: 10px;
+}
+.holiday {
+  color: red;
+}
