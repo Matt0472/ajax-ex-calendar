@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
   <!-- CDN jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- CDN handlebars -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.2/handlebars.js" integrity="sha256-N5vR06TQIR+YD8oS0yndB1pu/EITeijW52dwezEq7/g=" crossorigin="anonymous"></script>
   <!-- link MOMENTJS -->
   <script src="https://momentjs.com/downloads/moment.min.js" charset="utf-8"></script>
   <title>My calendar</title>
@@ -22,39 +24,14 @@
     <button type="button" name="button"><i class="fas fa-arrow-left"></i> Precedente</button>
     <button type="button" name="button">Successivo <i class="fas fa-arrow-right"></i></button>
     <ul class="days-list">
-      <li data-day="2018-01-01"><span>1 Gennaio</span><span>- Capodanno</span></li>
-      <li data-day="2018-01-02"><span>2 Gennaio</span></li>
-      <li data-day="2018-01-03"><span>3 Gennaio</span></li>
-      <li data-day="2018-01-04"><span>4 Gennaio</span></li>
-      <li data-day="2018-01-05"><span>5 Gennaio</span></li>
-      <li data-day="2018-01-06"><span>6 Gennaio</span><span>- Efipafina</span></li>
-      <li data-day="2018-01-07"><span>7 Gennaio</span></li>
-      <li data-day="2018-01-08"><span>8 Gennaio</span></li>
-      <li data-day="2018-01-09"><span>9 Gennaio</span></li>
-      <li data-day="2018-01-10"><span>10 Gennaio</span></li>
-      <li data-day="2018-01-11"><span>11 Gennaio</span></li>
-      <li data-day="2018-01-12"><span>12 Gennaio</span></li>
-      <li data-day="2018-01-13"><span>13 Gennaio</span></li>
-      <li data-day="2018-01-14"><span>14 Gennaio</span></li>
-      <li data-day="2018-01-15"><span>15 Gennaio</span></li>
-      <li data-day="2018-01-16"><span>16 Gennaio</span></li>
-      <li data-day="2018-01-17"><span>17 Gennaio</span></li>
-      <li data-day="2018-01-18"><span>18 Gennaio</span></li>
-      <li data-day="2018-01-19"><span>19 Gennaio</span></li>
-      <li data-day="2018-01-20"><span>20 Gennaio</span></li>
-      <li data-day="2018-01-21"><span>21 Gennaio</span></li>
-      <li data-day="2018-01-22"><span>22 Gennaio</span></li>
-      <li data-day="2018-01-23"><span>23 Gennaio</span></li>
-      <li data-day="2018-01-24"><span>24 Gennaio</span></li>
-      <li data-day="2018-01-25"><span>25 Gennaio</span></li>
-      <li data-day="2018-01-26"><span>26 Gennaio</span></li>
-      <li data-day="2018-01-27"><span>27 Gennaio</span></li>
-      <li data-day="2018-01-28"><span>28 Gennaio</span></li>
-      <li data-day="2018-01-29"><span>29 Gennaio</span></li>
-      <li data-day="2018-01-30"><span>30 Gennaio</span></li>
-      <li data-day="2018-01-31"><span>31 Gennaio</span></li>
+      
     </ul>
   </div>
+  <script id="entry-template" type="text/x-handlebars-template">
+    <li data-day="{{date}}">
+      <span>{{number}}{{month}}</span>
+    </li>
+  </script>
   <script src="js/script.js" charset="utf-8"></script>
 </body>
 </html>

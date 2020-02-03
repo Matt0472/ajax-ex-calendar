@@ -11,18 +11,28 @@ $(document).ready(function() {
         url: 'https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0',
         method: "GET",
         success: function(data, stato) {
-          // console.log(data.response[0].date);
-          // console.log(data.response[1].date);
-          // fare un ciclo for
-          for (var i = 0; i < data.response.length; i++) {
-            var dayList = $('.days-list > li').attr('data-day');
-            var singleDate = data.response[i].date;
-            console.log(singleDate);
-            if (singleDate == dayList) {
-              $('span').addClass('holiday');
+          var tempo = moment("2018-01", "YYYY-MM").daysInMonth("YYYY-MM-DD");
+          for (var i = 1; i <= tempo; i++) {
+            var month = moment([2018]).month(0).format("YYYY-MM");
+            var number = i;
+            if (i < 10) {
+              var currentDate = month + '-' + '0' + i;
+            } else {
+              var currentDate = month + '-' + i;
             }
+            console.log(currentDate);
+            var source = $('#entry-template').html();
+            var template = Handlebars.compile(source);
+            var context = { number: number, month: ' Gennaio', date: currentDate};
+            var html = template(context);
+            $('.days-list').append(html);
           }
-          //confrontare il date del response con l'attributo dei li
+          for (var i = 0; i < data.response.length; i++) {
+            var singleDate = data.response[i].date;
+            var singleHoliday = data.response[i].name;
+            var dayList = $('li[data-day="' + singleDate + '"]');
+            dayList.addClass('holiday');
+          }
         },
         error: function(richiesta, stato, errori) {
           alert('E\' avvenuto un errore.' + errori);
