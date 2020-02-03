@@ -20,18 +20,24 @@ $(document).ready(function() {
             } else {
               var currentDate = month + '-' + i;
             }
-            console.log(currentDate);
             var source = $('#entry-template').html();
             var template = Handlebars.compile(source);
             var context = { number: number, month: ' Gennaio', date: currentDate};
             var html = template(context);
-            $('.days-list').append(html);
+            $('.first-month-list').append(html);
           }
           for (var i = 0; i < data.response.length; i++) {
             var singleDate = data.response[i].date;
             var singleHoliday = data.response[i].name;
             var dayList = $('li[data-day="' + singleDate + '"]');
             dayList.addClass('holiday');
+            if (dayList.hasClass('holiday')) {
+              var source = $('#span-template').html();
+              var template = Handlebars.compile(source);
+              var context = { name: singleHoliday};
+              var html = template(context);
+              dayList.append(html);
+            }
           }
         },
         error: function(richiesta, stato, errori) {
