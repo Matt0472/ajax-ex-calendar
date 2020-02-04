@@ -11,11 +11,13 @@ $(document).ready(function () {
   printHoliday(baseMonth);
 
   $('#next').click(function () {
-
     var thisMonth = $('h2').attr('data-this-month');
     var date = moment(thisMonth).add(1, 'months');
     console.log(date);
-
+    if (thisMonth == '2018-12') {
+      alert('fuck');
+      var date = moment(thisMonth).subtract(11, 'months');
+    }
 
     printMonth(date);
     printHoliday(date);
@@ -25,7 +27,10 @@ $(document).ready(function () {
     var thisMonth = $('h2').attr('data-this-month');
     var date = moment(thisMonth).subtract(1, 'months');
     console.log(date);
-
+    if (thisMonth == '2018-01') {
+      alert('fuck');
+      var date = moment(thisMonth).add(11, 'months');
+    }
 
     printMonth(date);
     printHoliday(date);
@@ -39,7 +44,6 @@ $(document).ready(function () {
 
 function printMonth(month) {
   $('.month-list').html('');
-  //inseriamo h1 dinamicamente
   $('h2').text(month.format('MMMM YYYY'));
   $('h2').attr('data-this-month', month.format('YYYY-MM'));
 
