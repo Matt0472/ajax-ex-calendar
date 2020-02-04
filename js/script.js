@@ -1,48 +1,92 @@
-$(document).ready(function() {
-  // var tempo = moment("2018-01", "YYYY-MM").daysInMonth();
-  // console.log(tempo);
-  // var bisestile = moment([2018]).isLeapYear();
-  // console.log(bisestile);
-  // var addMoment = moment([2010, 0, 31]).add(1, 'months');
-  // console.log(addMoment);
+$(document).ready(function () {
+  var thisMonth = 0;
+  var year = 2018;
+  var baseMonth = moment(
+    {
+      year: year,
+      month: thisMonth
+    }
+  );
+  printMonth(baseMonth);
+  printHoliday(baseMonth);
 
-  $.ajax(
-      {
-        url: 'https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0',
-        method: "GET",
-        success: function(data, stato) {
-          var tempo = moment("2018-01", "YYYY-MM").daysInMonth("YYYY-MM-DD");
-          for (var i = 1; i <= tempo; i++) {
-            var month = moment([2018]).month(0).format("YYYY-MM");
-            var number = i;
-            if (i < 10) {
-              var currentDate = month + '-' + '0' + i;
-            } else {
-              var currentDate = month + '-' + i;
-            }
-            var source = $('#entry-template').html();
-            var template = Handlebars.compile(source);
-            var context = { number: number, month: ' Gennaio', date: currentDate};
-            var html = template(context);
-            $('.first-month-list').append(html);
-          }
-          for (var i = 0; i < data.response.length; i++) {
-            var singleDate = data.response[i].date;
-            var singleHoliday = data.response[i].name;
-            var dayList = $('li[data-day="' + singleDate + '"]');
-            dayList.addClass('holiday');
-            if (dayList.hasClass('holiday')) {
-              var source = $('#span-template').html();
-              var template = Handlebars.compile(source);
-              var context = { name: singleHoliday};
-              var html = template(context);
-              dayList.append(html);
-            }
-          }
-        },
-        error: function(richiesta, stato, errori) {
-          alert('E\' avvenuto un errore.' + errori);
-        }
-      }
-    );
+  $('#next').click(function () {
+
+    var thisMonth = $('h2').attr('data-this-month');
+    var date = moment(thisMonth).add(1, 'months');
+    console.log(date);
+
+
+    printMonth(date);
+    printHoliday(date);
+  });
+
+  $('#prev').click(function () {
+    var thisMonth = $('h2').attr('data-this-month');
+    var date = moment(thisMonth).subtract(1, 'months');
+    console.log(date);
+
+
+    printMonth(date);
+    printHoliday(date);
+  });
+
 });
+
+
+
+// -----------------------FUNCTION -----------------------
+
+function printMonth(month) {
+  $('.month-list').html('');
+  //inseriamo h1 dinamicamente
+  $('h2').text(month.format('MMMM YYYY'));
+  $('h2').attr('data-this-month', month.format('YYYY-MM'));
+
+  var daysInMonth = month.daysInMonth();
+
+  for (var i = 1; i <= daysInMonth ; i++) {
+    var source = $('#entry-template').html();
+    var template = Handlebars.compile(source);
+    var context = {
+      day: i,
+      month: month.format('MMMM'),
+      dateComplete: month.format('YYYY-MM') + '-' + addZero(i)
+    };
+    var html = template(context);
+    $('.month-list').append(html);
+  }
+}
+
+function addZero(num) {
+  if(num < 10) {
+    return '0' + num;
+  }
+  return num;
+}
+
+
+function printHoliday(month) {
+  $.ajax(
+    {
+      url: 'https://flynn.boolean.careers/exercises/api/holidays',
+      method: 'GET',
+      data: {
+        year: month.year(),
+        month: month.month()
+      },
+      success: function (data) {
+        var holidays = data.response;
+        for (var i = 0; i < holidays.length; i++) {
+          var thisHoliday = holidays[i];
+          var thisHolidayData = thisHoliday.date;
+          $('li[data-date-complete="'+ thisHolidayData  +'"]').addClass('holiday');
+          $('li[data-date-complete="'+ thisHolidayData  +'"]').find('.nome-festivita').append('-' +  ' ' + thisHoliday.name);
+        }
+      },
+      error: function () {
+        alert('errore');
+      }
+    }
+  );
+}
